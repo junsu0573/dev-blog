@@ -1,4 +1,4 @@
-import { prisma } from './prisma'
+import { prisma } from "@/lib/prisma";
 
 export async function getAllPosts() {
   return await prisma.post.findMany({
@@ -7,16 +7,11 @@ export async function getAllPosts() {
     },
     include: {
       category: true,
-      tags: {
-        include: {
-          tag: true,
-        },
-      },
     },
     orderBy: {
-      publishedAt: 'desc',
+      publishedAt: "desc",
     },
-  })
+  });
 }
 
 export async function getPostBySlug(slug: string) {
@@ -27,21 +22,16 @@ export async function getPostBySlug(slug: string) {
     },
     include: {
       category: true,
-      tags: {
-        include: {
-          tag: true,
-        },
-      },
     },
-  })
+  });
 }
 
 export async function getAllCategories() {
   return await prisma.category.findMany({
     orderBy: {
-      name: 'asc',
+      name: "asc",
     },
-  })
+  });
 }
 
 export async function getPostsByCategory(categorySlug: string) {
@@ -54,14 +44,9 @@ export async function getPostsByCategory(categorySlug: string) {
     },
     include: {
       category: true,
-      tags: {
-        include: {
-          tag: true,
-        },
-      },
     },
     orderBy: {
-      publishedAt: 'desc',
+      publishedAt: "desc",
     },
-  })
+  });
 }

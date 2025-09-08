@@ -3,12 +3,9 @@ import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getPostBySlug } from '@/lib/blog'
+import type { BlogPostPageProps } from '@/types'
 
-interface Props {
-  params: Promise<{ slug: string }>
-}
-
-export default async function BlogPost({ params }: Props) {
+export default async function BlogPost({ params }: BlogPostPageProps) {
   const { slug } = await params
   const post = await getPostBySlug(slug)
 
@@ -65,18 +62,6 @@ export default async function BlogPost({ params }: Props) {
             </p>
           )}
 
-          {post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-4">
-              {post.tags.map((postTag) => (
-                <span 
-                  key={postTag.tag.id}
-                  className="bg-gray-100 text-gray-700 text-xs font-medium px-2 py-1 rounded"
-                >
-                  {postTag.tag.name}
-                </span>
-              ))}
-            </div>
-          )}
         </header>
 
         <div className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-strong:text-gray-900 prose-code:text-pink-600 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-gray-100 prose-pre:border prose-blockquote:border-l-blue-500">

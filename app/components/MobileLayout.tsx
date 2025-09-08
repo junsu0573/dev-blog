@@ -2,11 +2,7 @@
 
 import { useState, createContext, useContext } from "react";
 import Sidebar from "./Sidebar";
-
-interface MobileLayoutContextType {
-  sidebarOpen: boolean;
-  setSidebarOpen: (open: boolean) => void;
-}
+import type { MobileLayoutContextType, MobileLayoutProviderProps } from "@/types";
 
 const MobileLayoutContext = createContext<MobileLayoutContextType | undefined>(
   undefined
@@ -22,9 +18,6 @@ export const useMobileLayout = () => {
   return context;
 };
 
-interface MobileLayoutProviderProps {
-  children: React.ReactNode;
-}
 
 export function MobileLayoutProvider({ children }: MobileLayoutProviderProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);

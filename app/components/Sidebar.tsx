@@ -2,11 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-interface SidebarProps {
-  isOpen?: boolean;
-  onClose?: () => void;
-}
+import type { SidebarProps } from "@/types";
 
 export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
   const pathname = usePathname();

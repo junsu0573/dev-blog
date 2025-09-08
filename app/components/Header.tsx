@@ -62,6 +62,12 @@ export default function Header() {
             >
               About
             </Link>
+            <Link
+              href="/upload"
+              className="text-muted-foreground hover:text-foreground transition-colors font-medium"
+            >
+              Upload
+            </Link>
             
             {status === "loading" ? (
               <div className="text-muted-foreground">로딩중...</div>

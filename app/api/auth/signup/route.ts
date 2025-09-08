@@ -1,51 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
 import { z } from "zod";
-
-const prisma = new PrismaClient();
-
-const signupSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
+import { signupSchema } from "@/utils/validation";
+import { createUserByCredentials, getUserByEmail } from "@/lib/user";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { name, email, password } = signupSchema.parse(body);
 
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
+    const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
       return NextResponse.json(
-        { error: "User already exists with this email" },
+        { error: "해당 이메일은 이미 사용 중입니다." },
         { status: 400 }
       );
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        createdAt: true,
-      },
-    });
+    const user = await createUserByCredentials({ name, email, password });
 
     return NextResponse.json(
       {
-        message: "User created successfully",
+        message: "회원가입이 완료되었습니다.",
         user,
       },
       { status: 201 }
@@ -63,7 +39,5 @@ export async function POST(request: NextRequest) {
       { error: "Internal server error" },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }
