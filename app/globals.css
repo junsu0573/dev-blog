@@ -71,7 +71,9 @@
   body {
     margin: 0;
     padding: 0;
-    @apply bg-background text-foreground font-sans;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
   }
 
   /* Remove default list & heading styles */
