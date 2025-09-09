@@ -2,7 +2,10 @@
 
 import { useState, createContext, useContext } from "react";
 import Sidebar from "./Sidebar";
-import type { MobileLayoutContextType, MobileLayoutProviderProps } from "@/types";
+import type {
+  MobileLayoutContextType,
+  MobileLayoutProviderProps,
+} from "@/types";
 
 const MobileLayoutContext = createContext<MobileLayoutContextType | undefined>(
   undefined
@@ -18,8 +21,10 @@ export const useMobileLayout = () => {
   return context;
 };
 
-
-export function MobileLayoutProvider({ children }: MobileLayoutProviderProps) {
+export function MobileLayoutProvider({
+  children,
+  categories,
+}: MobileLayoutProviderProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -27,12 +32,16 @@ export function MobileLayoutProvider({ children }: MobileLayoutProviderProps) {
       <div className="flex flex-1">
         {/* Mobile Sidebar */}
         <div className="lg:hidden">
-          <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+          <Sidebar
+            isOpen={sidebarOpen}
+            onClose={() => setSidebarOpen(false)}
+            categories={categories}
+          />
         </div>
 
         {/* Desktop Sidebar */}
         <div className="hidden lg:block">
-          <Sidebar />
+          <Sidebar categories={categories} />
         </div>
 
         {/* Main Content */}

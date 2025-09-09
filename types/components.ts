@@ -11,6 +11,7 @@ export interface BlogClientProps {
 export interface SidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
+  categories: Category[];
 }
 
 // Session provider
@@ -26,6 +27,7 @@ export interface MobileLayoutContextType {
 
 export interface MobileLayoutProviderProps {
   children: React.ReactNode;
+  categories: Category[];
 }
 
 // Page props
